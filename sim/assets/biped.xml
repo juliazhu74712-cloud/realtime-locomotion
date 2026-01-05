@@ -1,0 +1,64 @@
+<mujoco model="biped">
+  <compiler angle="degree" coordinate="local"/>
+  <option timestep="0.005" gravity="0 0 -9.81" iterations="50" solver="Newton"/>
+  <default>
+    <joint armature="0.01" damping="1" limited="true"/>
+    <geom friction="1 0.5 0.5" density="800" margin="0.002" condim="3"/>
+    <motor ctrlrange="-1 1" ctrllimited="true"/>
+  </default>
+
+  <worldbody>
+    <geom name="floor" type="plane" size="10 10 0.1" rgba="0.92 0.92 0.92 1"/>
+
+    <body name="torso" pos="0 0 1.25">
+      <geom type="capsule" fromto="0 0 0 0 0 0.35" size="0.08" rgba="0.7 0.4 0.4 1"/>
+
+      <joint name="rootx" type="slide" axis="1 0 0" limited="false"/>
+      <joint name="rooty" type="slide" axis="0 1 0" limited="false"/>
+      <joint name="rootz" type="slide" axis="0 0 1" limited="false"/>
+      <joint name="rootroll"  type="hinge" axis="1 0 0" limited="false"/>
+      <joint name="rootpitch" type="hinge" axis="0 1 0" limited="false"/>
+      <joint name="rootyaw"   type="hinge" axis="0 0 1" limited="false"/>
+
+      <body name="pelvis" pos="0 0 0.0">
+        <geom type="capsule" fromto="0 0 0 0 0 -0.2" size="0.09" rgba="0.4 0.4 0.7 1"/>
+
+        <body name="left_thigh" pos="0 0.1 -0.1">
+          <joint name="left_hip" type="hinge" axis="1 0 0" range="-60 60"/>
+          <geom type="capsule" fromto="0 0 0 0 0 -0.45" size="0.06"/>
+          <body name="left_shin" pos="0 0 -0.45">
+            <joint name="left_knee" type="hinge" axis="1 0 0" range="0 130"/>
+            <geom type="capsule" fromto="0 0 0 0 0 -0.45" size="0.05"/>
+            <body name="left_foot" pos="0 0 -0.45">
+              <joint name="left_ankle" type="hinge" axis="1 0 0" range="-45 45"/>
+              <geom type="box" size="0.09 0.04 0.02" pos="0.03 0 -0.02" rgba="0.2 0.2 0.2 1"/>
+            </body>
+          </body>
+        </body>
+
+        <body name="right_thigh" pos="0 -0.1 -0.1">
+          <joint name="right_hip" type="hinge" axis="1 0 0" range="-60 60"/>
+          <geom type="capsule" fromto="0 0 0 0 0 -0.45" size="0.06"/>
+          <body name="right_shin" pos="0 0 -0.45">
+            <joint name="right_knee" type="hinge" axis="1 0 0" range="0 130"/>
+            <geom type="capsule" fromto="0 0 0 0 0 -0.45" size="0.05"/>
+            <body name="right_foot" pos="0 0 -0.45">
+              <joint name="right_ankle" type="hinge" axis="1 0 0" range="-45 45"/>
+              <geom type="box" size="0.09 0.04 0.02" pos="0.03 0 -0.02" rgba="0.2 0.2 0.2 1"/>
+            </body>
+          </body>
+        </body>
+
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor joint="left_hip"   gear="80"/>
+    <motor joint="left_knee"  gear="120"/>
+    <motor joint="left_ankle" gear="60"/>
+    <motor joint="right_hip"   gear="80"/>
+    <motor joint="right_knee"  gear="120"/>
+    <motor joint="right_ankle" gear="60"/>
+  </actuator>
+</mujoco>
